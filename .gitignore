@@ -1,0 +1,6 @@
+.vscode
+build/
+bak/
+flash.bat
+backtrace.bat
+erase.bat
