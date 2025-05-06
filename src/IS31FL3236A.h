@@ -29,8 +29,14 @@ typedef enum {
     IS31FL3236A_REG_RESET = 0x4F
 } IS31FL3236A_REG_t;
 
+typedef enum {
+    GAMMA_STEPS_OFF = 0,
+    GAMMA_STEPS_32,
+    GAMMA_STEPS_64,
+} IS31FL3236A_GAMMA_STEPS_t;
+
 // Uncomment to enable debug messages
-#define IS31FL3236A_DEBUG
+// #define IS31FL3236A_DEBUG
 
 // Define where debug output will be printed
 #define DEBUG_PRINTER Serial
@@ -82,6 +88,7 @@ class IS31FL3236A {
     void setLedControl(uint8_t ch, IS31FL3236A_IOUT_t sl, bool en);
     void setGlobalControl(bool g_en);
     void setOutputFrequency(IS31FL3236A_OUTPUT_FREQUENCY_t freq);
+    void setGammaCorrection(IS31FL3236A_GAMMA_STEPS_t gamma) { this->gamma = gamma; }
     void reset();
 
    private:
@@ -89,6 +96,8 @@ class IS31FL3236A {
     int8_t _scl = -1;
     IS31FL3236A_AD_PIN_t _ad;
     int8_t _sdb = -1;
+
+    IS31FL3236A_GAMMA_STEPS_t gamma = GAMMA_STEPS_OFF;
 
     uint8_t writeMultiByte(uint8_t addr, uint8_t* data, uint8_t size);
     uint8_t writeWord(uint8_t addr, uint16_t data);
